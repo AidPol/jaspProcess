@@ -24,11 +24,32 @@ import "./common" as Common
 
 Form
 {
+	info:  qsTr("Bayesian conditional process analysis allows users to test moderation and mediation effects as well as combinations of both effects. In a moderation effect, the relationship between variables *X* and *Y* differs dependening on the value of a third variable *W* (the moderator). A mediation effect is a causal chain, where the effect of *X* on *Y* goes either fully or partially through a third variable *M* (the mediator). Conditional process models combine (multiple) moderation and mediation effects."
+	"### Assumptions\n\n\
+	#### Causal Assumptions\n\n\
+	For details, see Kline (2012).\n\n\
+	Conditional process models involving mediation effects are <i>causal</i> models with causal effects. <b>Interpreting model estimates as causal effects requires the causal model to be correct</b>. This implies that:\n\n\
+	- Causes must occur before their effects, e.g., if X → M → Y, then X must occur before M and Y.\n\
+	- There are no other plausible explanations (e.g., confounding variables) that can account for statistical associations between two variables.\n\
+	- The direction of causal effects is correctly specified, e.g., X → M → Y instead of X ← M ← Y.\n\n\
+	Furthermore, conditional process models in JASP are conceptualized as directed acyclic graphs (DAGs). Therefore, the model should not contain feedback loops.\n\n\
+	#### Structural Equation Model Assumptions\n\n\
+	Conditional process models in JASP are conceptualized and estimated as structural equation models (SEMs), which make the following assumptions:\n\n\
+	- <b>Exogeneity</b>: The parameters of the conditional distribution of dependent (endogenous) variables given the independent (exogenous) variables should be unrelated to the parameters of the unconditional distribution of the independent variables. This implies that all omitted causes of the dependent variables are unrelated to the independent variables (pseudo-isolation).\n\
+	- <b>Local independence</b>: The absence of covariance between (the residual variances of) two dependent variables implies that, given the other variables in the model, the two variables should be independent. This implies that they have no omitted common causes.\n\n\
+	#### Data Assumptions\n\n\
+	Bayesian conditional process models in JASP require all dependent (endogenous) variables in the model to follow a multivariate normal distribution. This implies that:\n\n\
+	- All univariate distributions of dependent variables should be normal.\n\
+	- All bivariate associations between dependent variables are linear.\n\
+	- The distribution of residuals does not depend on the independent variables, i.e., they are homoscedastic.")
+
+	
 	Common.VariablesForm {}
 
     Section
     {
         title: qsTr("Models")
+		info:  qsTr("This section allows users to specify multiple process models through one of two interfaces. New models can be added by clicking the green `+` button.")
         columns: 1
 
         TabView
@@ -105,26 +126,31 @@ Form
 			{
 				label: qsTr("Prior distributions")
 				name: "priorDistributions"
+				info:  qsTr("Shows the prior distributions for path coefficients in the output. The distributions can be modified in the `Advanced` section.")
 			}
 			CheckBox 
 			{
 				label: qsTr("Parameter labels")
 				name: "parameterLabels"
+				info:  qsTr("Displays the labels of parameter in the output tables. For indirect and direct (total) effects, displays the equations for the effects.")
 			}
 			CheckBox 
 			{
 				label: qsTr("Lavaan syntax")
 				name: "syntax"
+				info:  qsTr("Shows the lavaan syntax used to fit the model in the output.")
 			}
 			CheckBox 
 			{
 				label: qsTr("BIC weights")
 				name: "bicWeights"
+				info:  qsTr("Shows the Schwarz weights in the summary table in the output.")
 			}
 			CheckBox 
 			{
 				label: qsTr("Hayes configuration number")
 				name: "hayesNumber"
+				info:  qsTr("Displays the configuration number according to Hayes (2022).")
 			}
 		}
 
@@ -135,6 +161,7 @@ Form
 				name:			"mcmcBurnin"
 				id:				warmup
 				label:			qsTr("Burnin")
+				info:  			qsTr("Number of burnin samples drawn for each MCMC chain.")
 				defaultValue:	500
 				min:			100
 			}
@@ -143,6 +170,7 @@ Form
 			{
 				name:			"mcmcSamples"
 				label:			qsTr("Samples")
+				info:  			qsTr("Number of samples drawn for each MCMC chain.")
 				defaultValue:	1000
 				min:			parseInt(warmup.value) + 100
 			}
@@ -151,6 +179,7 @@ Form
 			{
 				name:			"mcmcChains"
 				label:			qsTr("Chains")
+				info:  			qsTr("Number of chains in the MCMC algorithm.")
 				defaultValue:	3
 				min:			1
 			}
@@ -164,12 +193,14 @@ Form
 			{
 				text: qsTr("Credible intervals")
 				name: "ciLevel"
+				info: qsTr("The level of credible intervals in the output tables. Credible intervals are based on quantiles of the posterior samples.")
 			}
 			
 			CheckBox
 			{
 				label: qsTr("Mean-centered moderation")
 				name: "meanCenteredModeration"
+				info:  qsTr("Continuous variables involved in moderation effects are mean-centered before entering the analysis. When `Missing Value Handling` is `Exclude cases listwise`, centering is applied only based on complete cases.")
 				checked: true
 			}
 		}
@@ -184,6 +215,7 @@ Form
 		{
 			name: 		"useColorPalette"
 			label: 		qsTr("Color palette")
+			info:		qsTr("Color palette for plots.")
 			checked: 	true
 			childrenOnSameRow: true
 
@@ -202,20 +234,21 @@ Form
 			columns: 2
 			Group
 			{
-				CheckBox { name: "aggregatedChains";	label: qsTr("Aggregate chains for densities and histograms");	checked:true	}
-				CheckBox { name: "legend";				label: qsTr("Show legends");									checked:true	}
-				CheckBox { name: "densityPlot";			label: qsTr("Density")															}
-				CheckBox { name: "histogramPlot";		label: qsTr("Histogram")														}
-				CheckBox { name: "tracePlot";			label: qsTr("Trace");															}
+				CheckBox { name: "aggregatedChains";	label: qsTr("Aggregate chains for densities and histograms"); 	info:	qsTr("If checked, the samples of different chains are aggregated in density plots and histograms. If unchecked, there are separate colors per chain.");	checked:true	}
+				CheckBox { name: "legend";				label: qsTr("Show legends");									info:	qsTr("Shows legends");																																	checked:true	}
+				CheckBox { name: "densityPlot";			label: qsTr("Density");											info:	qsTr("Shows a density plot of the posterior samples.")																													}
+				CheckBox { name: "histogramPlot";		label: qsTr("Histogram");										info:	qsTr("Shows a histogram of the posterior samples.")																														}
+				CheckBox { name: "tracePlot";			label: qsTr("Trace");											info:	qsTr("Shows a trace plot of the posterior samples.")																													}
 			}
 			Group
 			{
 				columns: 2
-				CheckBox { label: qsTr("Autocorrelation");	name: "autoCorPlot"; id: autoCorrelation
+				CheckBox { label: qsTr("Autocorrelation");	name: "autoCorPlot"; id: autoCorrelation; info: qsTr("Plots the autocorrelation of the posterior samples.")
 					IntegerField
 					{
 						name: "autoCorPlotLags"
 						label: qsTr("No. lags")
+						info:  qsTr("Sets the maximum number of lags to show in the autocorrelation plot.")
 						defaultValue: 20
 						min: 1
 						max: 100
@@ -224,24 +257,24 @@ Form
 					{
 						name: "autoCorPlotType"
 						title: qsTr("Type")
-						RadioButton { value: "lines";	label: qsTr("line"); checked:true	}
-						RadioButton { value: "bars";	label: qsTr("bar")					}
+						RadioButton { value: "lines";	label: qsTr("line"); info:("Display the autocorrelation as a line that connects subsequent lags"); checked:true	}
+						RadioButton { value: "bars";	label: qsTr("bar");	 info:("Display the autocorrelation as a bar at each lag")									}
 					}
 				}
-				CheckBox { label: qsTr("Bivariate scatter");  name: "bivariateScatterPlot"; id: bivariateScatter
+				CheckBox { label: qsTr("Bivariate scatter");  name: "bivariateScatterPlot"; info: qsTr("Shows a bivariate scatter plot of all pairs of variables. Only shows output when more than 1 parameter is sampled."); id: bivariateScatter
 					RadioButtonGroup
 					{
 						name: "bivariateScatterDiagonalType"
 						title: qsTr("Diagonal plot type")
-						RadioButton { value: "density";		label: qsTr("Density"); checked:true	}
-						RadioButton { value: "histogram";	label: qsTr("Histogram")				}
+						RadioButton { value: "density";		label: qsTr("Density"); 	info: qsTr("Show a density plot on the diagonal entries of the scatter plot."); checked:true	}
+						RadioButton { value: "histogram";	label: qsTr("Histogram"); 	info: qsTr("Shows a histogram on the diagonal entries of the scatter plot.")					}
 					}
 					RadioButtonGroup
 					{
 						name: "bivariateScatterOffDiagonalType"
 						title: qsTr("Off-diagonal plot type")
-						RadioButton { value: "hexagon";		label: qsTr("Hexagonal"); checked:true	}
-						RadioButton { value: "contour";		label: qsTr("Contour")					}
+						RadioButton { value: "hexagon";		label: qsTr("Hexagonal"); info: qsTr("Shows a hexagonal bivariate density plot on the off-diagonal entries of the scatter plot."); checked:true	}
+						RadioButton { value: "contour";		label: qsTr("Contour");   info: qsTr("Shows a contour plot on the off-diagonal entries of the scatter plot.")									}
 					}
 				}
 			}
@@ -257,6 +290,7 @@ Form
         Group
         {
             title: qsTr("Set for All Models")
+			info:  qsTr("Sets options for all models at the same time. See `Models`.")
             columns: 4
 
 			Group
@@ -346,6 +380,7 @@ Form
 		Group
 		{
 			title: qsTr("Prior distributions")
+			info:  qsTr("Sets prior distributions for different types of parameters.")
 
 			columns: 1
 
@@ -356,6 +391,7 @@ Form
 				Label
 				{
 					text: qsTr("Intercepts:")
+					info: qsTr("Location and scale parameters of normal priors on intercepts (v).")
 				}
 				Label
 				{
@@ -381,6 +417,7 @@ Form
 				Label
 				{
 					text: qsTr("Path coefficients:")
+					info: qsTr("Location and scale parameters of normal priors on path coefficients (β).")
 				}
 				Label
 				{
@@ -406,6 +443,7 @@ Form
 				Label
 				{
 					text: qsTr("Standard deviations:")
+					info: qsTr("Shape and rate parameters of gamma priors on standard deviations of the decomposed covariance matrix.")
 				}
 				Label
 				{
@@ -433,6 +471,7 @@ Form
 				Label
 				{
 					text: qsTr("Correlations:")
+					info: qsTr("Shape and rate parameters of gamma priors on correlations of the decomposed covariance matrix.")
 				}
 				Label
 				{
