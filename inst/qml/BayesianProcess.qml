@@ -24,24 +24,9 @@ import "./common" as Common
 
 Form
 {
-	info:  qsTr("Bayesian conditional process analysis allows users to test moderation and mediation effects as well as combinations of both effects. In a moderation effect, the relationship between variables *X* and *Y* differs dependening on the value of a third variable *W* (the moderator). A mediation effect is a causal chain, where the effect of *X* on *Y* goes either fully or partially through a third variable *M* (the mediator). Conditional process models combine (multiple) moderation and mediation effects."
-	"### Assumptions\n\n\
-	#### Causal Assumptions\n\n\
-	For details, see Kline (2012).\n\n\
-	Conditional process models involving mediation effects are <i>causal</i> models with causal effects. <b>Interpreting model estimates as causal effects requires the causal model to be correct</b>. This implies that:\n\n\
-	- Causes must occur before their effects, e.g., if X → M → Y, then X must occur before M and Y.\n\
-	- There are no other plausible explanations (e.g., confounding variables) that can account for statistical associations between two variables.\n\
-	- The direction of causal effects is correctly specified, e.g., X → M → Y instead of X ← M ← Y.\n\n\
-	Furthermore, conditional process models in JASP are conceptualized as directed acyclic graphs (DAGs). Therefore, the model should not contain feedback loops.\n\n\
-	#### Structural Equation Model Assumptions\n\n\
-	Conditional process models in JASP are conceptualized and estimated as structural equation models (SEMs), which make the following assumptions:\n\n\
-	- <b>Exogeneity</b>: The parameters of the conditional distribution of dependent (endogenous) variables given the independent (exogenous) variables should be unrelated to the parameters of the unconditional distribution of the independent variables. This implies that all omitted causes of the dependent variables are unrelated to the independent variables (pseudo-isolation).\n\
-	- <b>Local independence</b>: The absence of covariance between (the residual variances of) two dependent variables implies that, given the other variables in the model, the two variables should be independent. This implies that they have no omitted common causes.\n\n\
-	#### Data Assumptions\n\n\
-	Bayesian conditional process models in JASP require all dependent (endogenous) variables in the model to follow a multivariate normal distribution. This implies that:\n\n\
-	- All univariate distributions of dependent variables should be normal.\n\
-	- All bivariate associations between dependent variables are linear.\n\
-	- The distribution of residuals does not depend on the independent variables, i.e., they are homoscedastic.")
+	info:  qsTr("Bayesian conditional process analysis allows users to test moderation and mediation effects as well as combinations of both effects. In a moderation effect, the relationship between variables *X* and *Y* differs dependening on the value of a third variable *W* (the moderator). A mediation effect is a causal chain, where the effect of *X* on *Y* goes either fully or partially through a third variable *M* (the mediator). Conditional process models combine (multiple) moderation and mediation effects.\n ### Assumptions\n\n#### Causal Assumptions\n\nFor details, see Kline (2012).\n\nConditional process models involving mediation effects are <i>causal</i> models with causal effects. <b>Interpreting model estimates as causal effects requires the causal model to be correct</b>. This implies that:\n\n- Causes must occur before their effects, e.g., if *X* → *M* → *Y*, then *X* must occur before *M* and *Y*.\n- There are no other plausible explanations (e.g., confounding variables) that can account for statistical associations between two variables.\n- The direction of causal effects is correctly specified, e.g., *X* → *M* → *Y* instead of *X* ← *M* ← *Y*.\n\nFurthermore, conditional process models in JASP are conceptualized as directed acyclic graphs (DAGs). Therefore, the model should not contain feedback loops.\n\n#### Structural Equation Model Assumptions\n\nConditional process models in JASP are conceptualized and estimated as structural equation models (SEMs), which make the following assumptions:\n\n- <b>Exogeneity</b>: The parameters of the conditional distribution of dependent (endogenous) variables given the independent (exogenous) variables should be unrelated to the parameters of the unconditional distribution of the independent variables. This implies that all omitted causes of the dependent variables are unrelated to the independent variables (pseudo-isolation).\n- <b>Local independence</b>: The absence of covariance between (the residual variances of) two dependent variables implies that, given the other variables in the model, the two variables should be independent. This implies that they have no omitted common causes.\n\n#### Data Assumptions\n\nBayesian conditional process models in JASP require all dependent (endogenous) variables in the model to follow a multivariate normal distribution. This implies that:\n\n- All univariate distributions of dependent variables should be normal.\n- All bivariate associations between dependent variables are linear.\n- The distribution of residuals does not depend on the independent variables, i.e., they are homoscedastic.")
+
+	
 
 	
 	Common.VariablesForm {}
@@ -391,7 +376,7 @@ Form
 				Label
 				{
 					text: qsTr("Intercepts:")
-					info: qsTr("Location and scale parameters of normal priors on intercepts (v).")
+					//info: qsTr("Location and scale parameters of normal priors on intercepts (v).")
 				}
 				Label
 				{
@@ -417,7 +402,7 @@ Form
 				Label
 				{
 					text: qsTr("Path coefficients:")
-					info: qsTr("Location and scale parameters of normal priors on path coefficients (β).")
+					//info: qsTr("Location and scale parameters of normal priors on path coefficients (β).")
 				}
 				Label
 				{
@@ -443,7 +428,7 @@ Form
 				Label
 				{
 					text: qsTr("Standard deviations:")
-					info: qsTr("Shape and rate parameters of gamma priors on standard deviations of the decomposed covariance matrix.")
+					//info: qsTr("Shape and rate parameters of gamma priors on standard deviations of the decomposed covariance matrix.")
 				}
 				Label
 				{
@@ -471,7 +456,7 @@ Form
 				Label
 				{
 					text: qsTr("Correlations:")
-					info: qsTr("Shape and rate parameters of gamma priors on correlations of the decomposed covariance matrix.")
+					//info: qsTr("Shape and rate parameters of gamma priors on correlations of the decomposed covariance matrix.")
 				}
 				Label
 				{
